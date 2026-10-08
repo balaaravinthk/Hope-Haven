@@ -1,5 +1,121 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
+@theme {
+  --font-display: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #1a3654;
+  --color-navy-deep: #12263d;
+  --color-navy-soft: #2a4d73;
+  --color-leaf: #2f8f5b;
+  --color-leaf-deep: #247048;
+  --color-leaf-soft: #e8f5ee;
+  --color-heart: #d64545;
+  --color-glow: #fff6e8;
+  --color-mist: #f3f7f5;
+  --color-mist-deep: #e4eee8;
+  --color-ink: #1a2b3c;
+  --color-muted: #5a6b7a;
+  --color-line: #d5e0d9;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background: var(--color-mist);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .bg-haven {
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 20%, rgba(47, 143, 91, 0.14), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 90% 10%, rgba(255, 246, 232, 0.9), transparent 50%),
+      radial-gradient(ellipse 60% 45% at 70% 85%, rgba(26, 54, 84, 0.08), transparent 55%),
+      linear-gradient(165deg, #f7faf8 0%, #eef5f1 45%, #e6efe9 100%);
+  }
+
+  .bg-haven-soft {
+    background: linear-gradient(180deg, #ffffff 0%, var(--color-mist) 100%);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-rise {
+    animation: rise-in 0.8s ease-out both;
+  }
+
+  .animate-rise-delay {
+    animation: rise-in 0.8s ease-out 0.15s both;
+  }
+
+  .animate-rise-delay-2 {
+    animation: rise-in 0.8s ease-out 0.3s both;
+  }
+
+  .animate-float {
+    animation: float-soft 7s ease-in-out infinite;
+  }
+
+  .animate-fade-line {
+    animation: draw-line 1.2s ease-out 0.4s both;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes draw-line {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-rise-delay,
+  .animate-rise-delay-2,
+  .animate-float,
+  .animate-fade-line {
+    animation: none;
+  }
 }

@@ -1,59 +1,26 @@
 function Stats() {
   const stats = [
-    {
-      number: "12,500+",
-      title: "Successful Donations",
-      icon: "❤️",
-    },
-    {
-      number: "320+",
-      title: "Verified Orphanages",
-      icon: "🏠",
-    },
-    {
-      number: "4,800+",
-      title: "Active Volunteers",
-      icon: "🙋",
-    },
-    {
-      number: "2,100+",
-      title: "Requirements Fulfilled",
-      icon: "🎁",
-    },
+    { number: "12,500+", title: "Successful donations" },
+    { number: "320+", title: "Verified orphanages" },
+    { number: "4,800+", title: "Active volunteers" },
+    { number: "2,100+", title: "Needs fulfilled" },
   ];
 
   return (
-    <section className="bg-white py-20">
-      <div className="max-w-7xl mx-auto px-8">
-
-        <h2 className="text-4xl font-bold text-center mb-14 text-gray-800">
-          Our Impact
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-          {stats.map((item, index) => (
-            <div
-              key={index}
-              className="bg-blue-50 rounded-2xl p-8 text-center shadow hover:shadow-xl transition"
-            >
-              <div className="text-5xl mb-4">
-                {item.icon}
-              </div>
-
-              <h3 className="text-3xl font-bold text-blue-700">
+    <section className="border-y border-line bg-white py-14 md:py-16">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-6">
+          {stats.map((item) => (
+            <div key={item.title} className="text-center lg:text-left">
+              <p className="font-display text-3xl font-extrabold text-navy md:text-4xl">
                 {item.number}
-              </h3>
-
-              <p className="mt-3 text-gray-600">
+              </p>
+              <p className="mt-2 text-sm font-medium text-muted md:text-base">
                 {item.title}
               </p>
-
             </div>
           ))}
-
         </div>
-
       </div>
     </section>
   );

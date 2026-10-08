@@ -2,54 +2,39 @@ import logoBest from "../assets/logoisthebest.png";
 
 function Footer() {
   return (
-    <footer className="bg-slate-900 text-white">
-      <div className="max-w-7xl mx-auto px-8 py-12">
-
-        {/* Top */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-
-          {/* Logo */}
+    <footer className="bg-navy-deep text-white">
+      <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           <div className="flex items-center gap-3">
             <img
               src={logoBest}
-              alt="Hope Haven"
-              className="w-12 h-12 object-contain"
+              alt=""
+              className="h-11 w-11 rounded-full bg-white/95 object-contain p-0.5"
             />
-
-            <h2 className="text-3xl font-bold">
-              Hope<span className="text-green-500">Haven</span>
-            </h2>
+            <p className="font-display text-2xl font-extrabold tracking-tight">
+              Hope<span className="text-leaf">Haven</span>
+            </p>
           </div>
 
-          {/* Links */}
-          <div className="flex gap-8 text-gray-300 font-medium">
-            <a href="#about" className="hover:text-green-400 transition">
+          <div className="flex flex-wrap justify-center gap-6 font-display text-sm font-semibold text-white/75">
+            <a href="#about" className="transition-colors hover:text-white">
               About
             </a>
-
-            <a href="#services" className="hover:text-green-400 transition">
+            <a href="#services" className="transition-colors hover:text-white">
               Services
             </a>
-
-            <a href="#contact" className="hover:text-green-400 transition">
+            <a href="#contact" className="transition-colors hover:text-white">
               Contact
             </a>
           </div>
-
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-slate-700 my-8"></div>
+        <div className="my-8 border-t border-white/10" />
 
-        {/* Bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-gray-400 text-sm gap-4">
-
-          <p>© 2026 Hope Haven. All Rights Reserved.</p>
-
-          <p>Made with ❤️ for a better future.</p>
-
+        <div className="flex flex-col items-center justify-between gap-3 text-sm text-white/55 md:flex-row">
+          <p>© 2026 Hope Haven. All rights reserved.</p>
+          <p>Care. Love. Support. Together.</p>
         </div>
-
       </div>
     </footer>
   );

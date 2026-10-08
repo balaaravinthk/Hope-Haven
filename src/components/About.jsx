@@ -1,92 +1,54 @@
+import { HeartHandshake, ShieldCheck, Users } from "lucide-react";
+
 function About() {
+  const values = [
+    {
+      icon: ShieldCheck,
+      title: "Trusted platform",
+      text: "Transparent connections between donors, volunteers, and orphanages — so every act of kindness is clear and accountable.",
+    },
+    {
+      icon: HeartHandshake,
+      title: "Verified orphanages",
+      text: "Homes are verified before they appear on Hope Haven, helping support reach children safely and meaningfully.",
+    },
+    {
+      icon: Users,
+      title: "Community driven",
+      text: "People and partners work together — mentoring, donating, and showing up — to build brighter futures side by side.",
+    },
+  ];
+
   return (
-    <section
-      id="about"
-      className="py-24 bg-gradient-to-br from-[#FAFAFA] via-[#F3F4F6] to-[#E5E7EB]"
-    >
-      <div className="max-w-7xl mx-auto px-8">
-
-        {/* Section Tag */}
-        <p className="text-green-600 font-semibold uppercase tracking-[0.25em]">
-          ABOUT US
-        </p>
-
-        {/* Heading */}
-        <h2 className="mt-3 text-5xl font-bold text-slate-800 leading-tight">
-          Together, We Create
-          <br />
-          <span className="text-green-600">Brighter Futures.</span>
-        </h2>
-
-        {/* Paragraph */}
-        <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-600">
-          Hope Haven connects orphanages, donors, and volunteers through one
-          trusted platform. We believe every act of kindness can transform a
-          child's future by making support simple, transparent, and meaningful.
-        </p>
-
-        {/* Divider */}
-        <div className="w-24 h-1 bg-green-600 rounded-full mt-12 mb-12"></div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          {/* Card 1 */}
-          <div className="group bg-white border border-gray-200 rounded-3xl p-8 shadow-md hover:shadow-2xl hover:-translate-y-3 transition-all duration-300">
-
-            <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center text-4xl">
-              🤝
-            </div>
-
-            <h3 className="mt-6 text-2xl font-semibold text-slate-800">
-              Trusted Platform
-            </h3>
-
-            <p className="mt-4 text-slate-600 leading-7">
-              A secure platform connecting donors, volunteers and orphanages
-              with complete transparency.
-            </p>
-
-          </div>
-
-          {/* Card 2 */}
-          <div className="group bg-white border border-gray-200 rounded-3xl p-8 shadow-md hover:shadow-2xl hover:-translate-y-3 transition-all duration-300">
-
-            <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-4xl">
-              🏠
-            </div>
-
-            <h3 className="mt-6 text-2xl font-semibold text-slate-800">
-              Verified Orphanages
-            </h3>
-
-            <p className="mt-4 text-slate-600 leading-7">
-              Every registered orphanage is verified to ensure trust, safety
-              and meaningful support.
-            </p>
-
-          </div>
-
-          {/* Card 3 */}
-          <div className="group bg-white border border-gray-200 rounded-3xl p-8 shadow-md hover:shadow-2xl hover:-translate-y-3 transition-all duration-300">
-
-            <div className="w-16 h-16 rounded-2xl bg-yellow-100 flex items-center justify-center text-4xl">
-              ❤️
-            </div>
-
-            <h3 className="mt-6 text-2xl font-semibold text-slate-800">
-              Community Driven
-            </h3>
-
-            <p className="mt-4 text-slate-600 leading-7">
-              Together, we build brighter futures through kindness,
-              volunteering and collective action.
-            </p>
-
-          </div>
-
+    <section id="about" className="bg-haven-soft py-20 md:py-24">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <div className="max-w-2xl">
+          <p className="font-display text-sm font-bold uppercase tracking-[0.28em] text-leaf">
+            About us
+          </p>
+          <h2 className="mt-3 font-display text-4xl font-extrabold leading-tight text-navy text-balance md:text-5xl">
+            Together, we create brighter futures.
+          </h2>
+          <p className="mt-6 text-lg leading-8 text-muted">
+            Hope Haven brings orphanages, donors, and volunteers onto one calm,
+            trusted platform — making support simple, transparent, and human.
+          </p>
+          <div className="animate-fade-line mt-8 h-1 w-20 origin-left rounded-full bg-leaf" />
         </div>
 
+        <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-12">
+          {values.map(({ icon: Icon, title, text }) => (
+            <div key={title}>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-leaf-soft text-leaf">
+                <Icon size={24} strokeWidth={2} />
+              </div>
+              <h3 className="mt-5 font-display text-xl font-bold text-navy">
+                {title}
+              </h3>
+              <p className="mt-3 leading-7 text-muted">{text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
