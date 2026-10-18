@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Building2,
   HandHeart,
@@ -11,6 +11,7 @@ import {
   X,
   ShieldCheck,
   CheckCircle2,
+  Clock,
 } from "lucide-react";
 import logoBest from "../assets/logoisthebest.png";
 
@@ -131,6 +132,7 @@ function formatSize(bytes) {
 }
 
 function Register() {
+  const navigate = useNavigate();
   const [role, setRole] = useState("supporter");
   const [form, setForm] = useState(initialForm);
   const [files, setFiles] = useState(initialFiles);
@@ -138,6 +140,7 @@ function Register() {
   const [fileError, setFileError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [countdown, setCountdown] = useState(5);
   const [aadhaarOtp, setAadhaarOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
@@ -164,6 +167,16 @@ function Register() {
     return () => clearTimeout(id);
   }, [otpTimer]);
 
+  useEffect(() => {
+    if (!submitted || role !== "orphanage") return undefined;
+    if (countdown <= 0) {
+      navigate("/orphanage/dashboard");
+      return undefined;
+    }
+    const id = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    return () => clearTimeout(id);
+  }, [submitted, role, countdown, navigate]);
+
   const resetAadhaarFlow = () => {
     setAadhaarOtp("");
     setGeneratedOtp("");
@@ -176,6 +189,7 @@ function Register() {
 
   const resetAll = () => {
     setSubmitted(false);
+    setCountdown(5);
     setForm(initialForm);
     setFiles(initialFiles);
     setPhotoPreview("");
@@ -262,10 +276,29 @@ function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // For now, allow create without full orphanage docs / Aadhaar.
-    // Stricter checks can return when the backend is connected.
     setFileError("");
     setAadhaarError("");
+    if (role === "orphanage") {
+      const savedProfile = {
+        name: form.organizationName?.trim() || "Hope Children’s Home",
+        type: form.organizationType || "Children’s Home / CCI",
+        address: form.address || "12, Green Park Road, Coimbatore, Tamil Nadu — 641001",
+        contact: form.contactNumber || "+91 98765 43210",
+        email: form.orgEmail || "hopehome@email.com",
+        registrationNumber: form.registrationNumber || "TN/CCI/2019/0842",
+        pan: form.panNumber || "ABCDE1234F",
+        cciJj: form.cciJjNumber || "JJ/CCI/TN/0842",
+        authorizedPerson: form.authorizedPersonName || "Authorized Representative",
+        photoPreview: photoPreview || null,
+        verificationStatus: "Pending",
+      };
+      try {
+        localStorage.setItem("orphanageProfile", JSON.stringify(savedProfile));
+      } catch (err) {
+        console.warn("Could not save orphanageProfile to localStorage", err);
+      }
+      setCountdown(5);
+    }
     setSubmitted(true);
   };
 
@@ -363,7 +396,7 @@ function Register() {
         </div>
 
         {submitted ? (
-          <div className="animate-rise mx-auto mt-10 max-w-xl rounded-2xl border border-leaf/30 bg-white p-8 text-center md:p-10">
+          <div className="animate-rise mx-auto mt-10 max-w-xl rounded-2xl border border-leaf/30 bg-white p-8 text-center shadow-sm md:p-10">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-leaf-soft text-leaf">
               {role === "orphanage" ? (
                 <Building2 size={28} />
@@ -380,6 +413,25 @@ function Register() {
                   We’ve received your orphanage details and documents. Our team
                   will review them and get back to you shortly.
                 </p>
+
+                <div className="mt-6 rounded-2xl border border-leaf/25 bg-leaf-soft/60 p-4">
+                  <div className="flex items-center justify-center gap-2 text-sm font-bold text-leaf-deep">
+                    <Clock size={16} className="animate-spin text-leaf" />
+                    <span>
+                      Redirecting to your dashboard in{" "}
+                      <span className="font-extrabold text-navy">{countdown}</span>{" "}
+                      second{countdown === 1 ? "" : "s"}...
+                    </span>
+                  </div>
+                  <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-mist-deep">
+                    <div
+                      className="h-full rounded-full bg-leaf transition-all duration-1000 ease-linear"
+                      style={{
+                        width: `${Math.min(100, Math.max(0, ((5 - countdown) / 5) * 100))}%`,
+                      }}
+                    />
+                  </div>
+                </div>
               </>
             ) : (
               <>
@@ -393,12 +445,22 @@ function Register() {
               </>
             )}
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link
-                to={role === "orphanage" ? "/" : "/login"}
-                className="rounded-xl bg-leaf px-6 py-3 font-display font-bold text-white transition-colors hover:bg-leaf-deep"
-              >
-                {role === "orphanage" ? "Back to home" : "Go to Login"}
-              </Link>
+              {role === "orphanage" ? (
+                <button
+                  type="button"
+                  onClick={() => navigate("/orphanage/dashboard")}
+                  className="rounded-xl bg-leaf px-6 py-3 font-display font-bold text-white transition-colors hover:bg-leaf-deep"
+                >
+                  Go to Dashboard now
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="rounded-xl bg-leaf px-6 py-3 font-display font-bold text-white transition-colors hover:bg-leaf-deep"
+                >
+                  Go to Login
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={resetAll}

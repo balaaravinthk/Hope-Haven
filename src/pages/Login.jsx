@@ -7,6 +7,7 @@ function Login() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "", remember: false });
   const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("donor"); // 'donor', 'volunteer', 'orphanage'
 
   const updateField = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -14,9 +15,11 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Demo: orphanage accounts open the organization dashboard.
-    // Later, redirect by role from the backend (orphanage / donor / volunteer).
-    navigate("/orphanage/dashboard");
+    if (role === "orphanage") {
+      navigate("/orphanage/dashboard");
+    } else {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -62,8 +65,7 @@ function Login() {
             Log in to Hope Haven
           </h1>
           <p className="mt-4 text-lg leading-8 text-muted">
-            Orphanage accounts open your organization dashboard. Donor and
-            volunteer dashboards will connect next.
+            Select your role below to access the correct dashboard.
           </p>
         </div>
 
@@ -72,6 +74,22 @@ function Login() {
           className="animate-rise-delay mx-auto mt-10 max-w-xl"
         >
           <div className="rounded-2xl border border-line bg-white/90 p-6 backdrop-blur-sm md:p-8">
+            <div className="flex gap-2 mb-6">
+              {[
+                { id: "donor", label: "Donor / Volunteer" },
+                { id: "orphanage", label: "Orphanage" }
+              ].map(r => (
+                <button
+                  key={r.id}
+                  type="button"
+                  onClick={() => setRole(r.id)}
+                  className={`flex-1 py-2.5 rounded-xl font-display text-sm font-bold transition-colors ${role === r.id ? "bg-navy text-white" : "bg-mist/40 text-navy border border-line hover:bg-mist"}`}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+
             <div className="grid gap-5">
               <label className="block">
                 <span className="mb-2 block font-display text-sm font-semibold text-navy">
